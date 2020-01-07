@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+<!-- 学员表格 -->
+<table id="studentGrid"></table>
+
+<script type="text/javascript">
+    $("#studentGrid").datagrid({
+    	url:"student",
+    	method:"GET",
+    	fitColumns:true,
+    	striped:true,
+    	fit:true,
+    	singleSelect:true,
+    	columns:[[
+    		{field:'id',title:'学号',width:100},
+    		{field:'name',title:'姓名',width:100,align:'left'},
+    		{field:'sex',title:'性别',width:100,align:'center'},
+    		{field:'age',title:'年龄',width:100,align:'center'},
+    		{field:'score',title:'成绩',width:100,align:'right',editor:{type:'numberbox'}},
+    		{field:'action',title:'编辑',width:100,align:'center',
+    			formatter:function(value,row,index){
+    				return "<a href='#'>[编辑]</a>  <a href='#'>[删除]</a>";
+    			}
+    		},
+        ]]
+    });
+    $("#studentGrid").edatagrid({
+    	
+    	});
+</script>
+
+<!-- <table class="easyui-datagrid">
+	    <thead>
+			<tr>
+				<th data-options="field:'code'">Code</th>
+				<th data-options="field:'name'">Name</th>
+				<th data-options="field:'price'">Price</th>
+			</tr>
+	    </thead>
+	    <tbody>
+			<tr>
+				<td>001</td><td>name1</td><td>2323</td>
+			</tr>
+			<tr>
+				<td>002</td><td>name2</td><td>4612</td>
+			</tr>
+		</tbody>
+	</table> -->
+</body>
+</html>

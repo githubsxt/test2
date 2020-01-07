@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">
+<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">
+<script type="text/javascript" src="easyui/jquery.min.js">
+</script>
+<script type="text/javascript" src="easyui/jquery.easyui.min.js">
+</script>
+</head>
+<body>
+
+
+<table id="myTable"></table>
+	<script type="text/javascript">
+	 $(function(){
+		 //定义被编辑的行号
+		 var rowNumber = 0;
+		//页面加载完成就渲染表格
+			$("#myTable").datagrid({
+				    url:'student',
+				    method:'GET',
+					columns:[[
+					         {title:"编号",field:"id",checkbox:true},
+					         {title:"姓名",field:"name",width:100,editor:{
+					        	 								type:'validatebox',
+					        	 								options:{}
+					         								   }},
+					         {title:"年龄",field:"age",width:100,editor:{
+								 								type:'numberbox',
+								 								options:{}
+							 								   }},
+					         {title:"性别",field:"sex",width:100,editor:{
+								 								type:'validatebox',
+								 								options:{}
+							 								   }},
+							 /*  {title:"成绩",field:"name",width:100,editor:{
+ 								type:'combobox',
+ 								options:{url:'clerk',method:'GET',
+ 								    valueField:'id',
+ 								    textField:'name'}
+								   }} */
+					         ]],
+					
+					 
+					 rownumbers:true,
+					 singleSelect:true,
+					 toolbar:
+						 [{
+							text:'添加数据',
+							iconCls:'icon-add',
+							handler:function(){
+								$("#myTable").datagrid("insertRow",{
+																	index:0,
+																	row:{}
+																	});	
+								$("#myTable").datagrid("beginEdit",0);
+								
+												}
+						   },'-',
+						   {
+							text:'编辑数据',
+							iconCls:'icon-edit',
+							handler:function(){
+								var hasSelect = $("#myTable").datagrid("getSelections");
+								if(hasSelect.length == 1){
+									//alert(hasSelect[0].name);
+									var row = hasSelect[0];
+									rowNumber = $("#myTable").datagrid("getRowIndex",row);
+									$("#myTable").datagrid("beginEdit",rowNumber);
+								}
+								
+								
+							}
+						   },
+						   {
+							text:'保存修改',
+							iconCls:'icon-save',
+							handler:function(){
+								$("#myTable").datagrid("endEdit",rowNumber);
+							}
+							}],
+							
+					  pagination:true,
+					  onAfterEdit:function(index,data,changes){
+						  //alert(index);
+						  console.info(data);
+						  $.post(
+								"student",{obj :JSON.stringify(data)}	  
+						  ); 
+					  }
+					 
+			
+			}); 
+		
+				
+	 })
+		
+	 
+	</script>
+
+
+<script type="text/javascript">
+
+
+</script>
+
+</body>
+</html>
